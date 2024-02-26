@@ -13,6 +13,7 @@
     "prepare": "tsc"
   },
   "author": "José F. Romaniello <jfromaniello@gmail.com> (https://joseoncode.com/)",
+  "repository": "github:jfromaniello/typedmap",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.12",
