@@ -5,7 +5,7 @@ Typescript comes with a generic Map<K, V> type which allows you to set a fixed t
 ## Installation
 
 ```
-npm install typedmap
+npm install @jfromaniello/typedmap
 ```
 
 ## Usage
