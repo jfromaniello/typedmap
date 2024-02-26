@@ -11,7 +11,7 @@ npm install @jfromaniello/typedmap
 ## Usage
 
 ```ts
-import { TypedMap } from 'typedmap';
+import { TypedMap } from '@jfromaniello/typedmap';
 
 type KeyValue =
   ['foo' | 'bar', string] |
