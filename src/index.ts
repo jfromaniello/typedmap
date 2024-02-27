@@ -80,8 +80,11 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
 
 
   static wrap<KV extends Array<any>>(
-    map: TypedMap<KV> | Iterable<KV>
+    map: TypedMap<KV> | Iterable<KV> | undefined
   ) {
+    if (typeof map === 'undefined') {
+      return new TypedMap<KV>();
+    }
     if (map instanceof TypedMap) {
       return map;
     }
