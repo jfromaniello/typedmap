@@ -2,7 +2,6 @@
   "name": "@jfromaniello/typedmap",
   "version": "1.0.4",
   "description": "",
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -10,7 +9,19 @@
   ],
   "scripts": {
     "test": "jest",
-    "prepare": "tsc"
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "build:cjs": "npm run build -- -p ./tsconfig/cjs.json",
+    "build:esm": "npm run build -- -p ./tsconfig/esm.json && echo '{\"type\": \"module\"}'> dist/esm/package.json",
+    "build:types": "npm run build -- -p ./tsconfig/types.json",
+    "prepare": "run-s clean build:*"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "author": "José F. Romaniello <jfromaniello@gmail.com> (https://joseoncode.com/)",
   "repository": "github:jfromaniello/typedmap",
@@ -18,6 +29,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
+    "npm-run-all2": "^6.1.2",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   },
