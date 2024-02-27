@@ -54,4 +54,14 @@ describe('typed map', () => {
   it('should properly convert to array', () => {
     expect([...map]).toEqual([['a', 5]]);
   })
+
+  it('should be able to convert to a map', () => {
+    const m = map.esMap;
+    expect(m.get('a')).toBe(5);
+  });
+
+  it('should be able to wrap', () => {
+    const m = TypedMap.wrap(map);
+    expect(m.get('a')).toBe(5);
+  });
 });
