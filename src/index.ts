@@ -91,9 +91,13 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
     return new TypedMap(map);
   }
 
-  [Symbol.for('nodejs.util.inspect.custom')](depth, options, inspect) {
+  [Symbol.for('nodejs.util.inspect.custom')](
+    depth: number | null,
+    options: { [key: string]: any },
+    inspect: (obj: any, options: { [key: string]: any }) => string
+  ) {
     const className = this.constructor.name;
-    if (depth < 0) {
+    if (depth !== null && depth < 0) {
       return options.stylize(`[${className}]`, 'special');
     }
     const newOptions = Object.assign({}, options, {
