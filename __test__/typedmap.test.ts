@@ -1,5 +1,5 @@
 import { TypedMap } from '../src/index';
-
+import { inspect } from 'node:util';
 
 describe('typed map', () => {
   type TestType =
@@ -63,5 +63,14 @@ describe('typed map', () => {
   it('should be able to wrap', () => {
     const m = TypedMap.wrap(map);
     expect(m.get('a')).toBe(5);
+  });
+
+  it('should properly implement the inspect function', () => {
+    const map = new TypedMap<TestType>([
+      ['a', 5],
+      ['b', 10],
+      [1, 'c']
+    ]);
+    expect(inspect(map)).toMatchInlineSnapshot(`"TypedMap< Map(3) { 'a' => 5, 'b' => 10, 1 => 'c' } >"`);
   });
 });

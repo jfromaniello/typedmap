@@ -90,4 +90,18 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
     }
     return new TypedMap(map);
   }
+
+  [Symbol.for('nodejs.util.inspect.custom')](depth, options, inspect) {
+    const className = this.constructor.name;
+    if (depth < 0) {
+      return options.stylize(`[${className}]`, 'special');
+    }
+    const newOptions = Object.assign({}, options, {
+      depth: options.depth === null ? null : options.depth - 1,
+    });
+    const padding = ' '.repeat(className.length + 2);
+    const inner = inspect(this.esMap, newOptions)
+      .replace(/\n/g, `\n${padding}`);
+    return `${options.stylize(className, 'special')}< ${inner} >`;
+  }
 };
