@@ -17,20 +17,36 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
     return this.#map[Symbol.iterator]();
   }
 
+  /**
+   *
+   * Sets the value for the key in the map
+   *
+   * @param key - The key to set the value for
+   * @param value - The value to set
+   */
   set<
     K extends KV[0]
   >(key: K, value: Extract<KV, [K, any]>[1]) {
     this.#map.set(key, value);
   }
 
+  /**
+   *
+   * Returns the value associated to the key, or undefined if there is none
+   *
+   * @param key - The key to get the value for
+   * @returns - The value associated to the key, or undefined if there is none
+   */
   get<
     K extends KV[0]
-  >(key: K): Extract<KV, [K, any]>[1] {
+  >(key: K): Extract<KV, [K, any]>[1] | undefined {
     return this.#map.get(key) as KV[K];
   }
 
   /**
    * Returns an iterable of key, value pairs for every entry in the map.
+   *
+   * @returns - An iterable of key, value pairs for every entry in the map
    */
   entries(): IterableIterator<KV> {
     //@ts-ignore
@@ -39,6 +55,8 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
 
   /**
    * Returns an iterable of keys in the map
+   *
+   * @returns - An iterable of keys in the map
    */
   keys(): IterableIterator<KV[0]> {
     return this.#map.keys();
@@ -46,6 +64,8 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
 
   /**
    * Returns an iterable of values in the map
+   *
+   * @returns - An iterable of values in the map
    */
   values(): IterableIterator<KV[1]> {
     return this.#map.values();
@@ -60,11 +80,27 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
 
   /**
    * Deletes the entry for the given key
+   *
+   * @param key - The key to delete
+   * @returns Whether the key was deleted
    */
   delete<
     K extends KV[0]
   >(key: K): boolean {
     return this.#map.delete(key);
+  }
+
+  /**
+   *
+   * Checks if the map has an entry for the given key
+   *
+   * @param key - The key to check for
+   * @returns Whether the map has an entry for the given key
+   */
+  has<
+    K extends KV[0]
+  >(key: K): boolean {
+    return this.#map.has(key);
   }
 
   /**
@@ -74,10 +110,12 @@ export class TypedMap<KV extends Array<any>> implements Iterable<KV> {
     return this.#map.size;
   }
 
+  /**
+   * Returns the internal ES map
+   */
   get esMap() {
     return this.#map;
   }
-
 
   static wrap<KV extends Array<any>>(
     map: TypedMap<KV> | Iterable<KV> | undefined
